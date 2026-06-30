@@ -22,7 +22,7 @@ body {
 /* ---------- Hero ---------- */
 .hero {
   position: relative;
-  height: 100svh;
+  height: 120svh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,14 +31,23 @@ body {
 
 .hero-bg {
   position: absolute;
-  inset: 0;
-  /* TODO: swap to a real photo once provided */
-  background:
+  inset: -5%; /* a little overscan so the zoom/parallax never reveals an edge */
+  /* drop the couple photo at images/hero.jpg — the gradient layers stay underneath as a fallback if it's missing */
+  background-image:
+    url('images/hero.jpg'),
     radial-gradient(circle at 30% 20%, rgba(255,255,255,0.25), transparent 55%),
     linear-gradient(160deg, #3a3128 0%, #6b5a45 35%, #b08d57 70%, #e8c9a0 100%);
-  background-size: 200% 200%;
+  background-size: cover, 200% 200%, 200% 200%;
+  background-position: center, 0% 0%, 0% 0%;
+  background-repeat: no-repeat;
+  transform: scale(0.82);
+  transform-origin: center;
+  transition: transform 2.2s cubic-bezier(0.22, 1, 0.36, 1);
   animation: bgDrift 18s ease-in-out infinite alternate;
+  will-change: transform;
 }
+
+.hero-bg.zoomed { transform: scale(1); }
 
 @keyframes bgDrift {
   from { background-position: 0% 0%; }
